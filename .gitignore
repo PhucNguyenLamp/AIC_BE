@@ -1,0 +1,14 @@
+# Ignore __pycache__ directories
+__pycache__/
+
+# Ignore the fastapi folder
+fastapi/
+
+# Python bytecode
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
