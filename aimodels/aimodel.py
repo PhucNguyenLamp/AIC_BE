@@ -1,11 +1,5 @@
 import torch
 import torch.nn as nn
-from pydantic import BaseModel
-
-class InputData(BaseModel):
-    x: float
-class PredictionOutput(BaseModel):
-    prediction: float
 
 class LinearRegression(nn.Module):
     def __init__(self):

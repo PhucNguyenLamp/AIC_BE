@@ -2,7 +2,8 @@ from fastapi import APIRouter
 from config.database import collection_name
 from schemas.schema import list_serial
 from bson import ObjectId
-from aimodels.aimodel import model, PredictionOutput, InputData
+from aimodels.aimodel import model
+from models.model import Image, InputData, PredictionOutput
 import torch
 
 router = APIRouter()
@@ -12,7 +13,7 @@ router = APIRouter()
 async def get_images():
     images = list_serial(collection_name.find())
     # return images
-    return {"hello": 'world'}
+    return images
 
 # POST request for model
 @router.post("/predict", response_model=PredictionOutput)
@@ -21,3 +22,7 @@ async def predict(data: InputData):
     with torch.no_grad():
         prediction = model(input_tensor)
     return {"prediction": prediction.item()}
+
+@router.post('/uploadsomething')
+async def upload_image(image: Image):
+    collection_name.insert_one(dict(image))
