@@ -1,5 +1,12 @@
 import torch
 import torch.nn as nn
+from pydantic import BaseModel
+
+class InputData(BaseModel):
+    x: float
+class PredictionOutput(BaseModel):
+    prediction: float
+
 class LinearRegression(nn.Module):
     def __init__(self):
         super(LinearRegression, self).__init__()
@@ -9,6 +16,6 @@ class LinearRegression(nn.Module):
         return self.linear(x)
 
 model = LinearRegression()
-model.load_state_dict(torch.load("linear_regression_model.pth"))
+model.load_state_dict(torch.load("./aimodels/linear_regression_model.pth"))
 model.eval()  # Set the model to evaluation mode
 
