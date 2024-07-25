@@ -12,3 +12,6 @@ fastapi/
 # Virtual environment
 venv/
 env/
+
+# multiple cluster testing
+notebooks/
