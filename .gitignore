@@ -15,3 +15,5 @@ env/
 
 # multiple cluster testing
 notebooks/
+.env
+.env.dev
