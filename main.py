@@ -1,3 +1,4 @@
+import os
 from typing import List
 from fastapi import FastAPI, Request
 from fastapi.middleware import Middleware
@@ -11,6 +12,7 @@ from beanie import init_beanie
 from contextlib import asynccontextmanager
 from motor.motor_asyncio import AsyncIOMotorClient
 from app.common.middlewares import ResponseLoggerMiddleware
+from fastapi.staticfiles import StaticFiles
 
 def init_listeners(app_: FastAPI) -> None:
     @app_.exception_handler(CustomException)
@@ -67,5 +69,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+image_path = os.path.join(os.path.dirname(__file__), "./migration/data/images")
+app.mount("/images", StaticFiles(directory=image_path, html=False), name="images")
 
 app.include_router(v1_router, prefix=settings.API_V1_STR)

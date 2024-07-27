@@ -29,9 +29,10 @@ class ResponseLoggerMiddleware:
                 response_info.headers = Headers(raw=message.get("headers"))
                 response_info.status_code = message.get("status")
             elif message.get("type") == "http.response.body":
-                if body := message.get("body"):
-                    response_info.body += body.decode("utf8")
-
+                # check if body is a string
+                if isinstance(message.get("body"), str) and message.get("body") != "":
+                    response_info.body += message.get("body").decode("utf8")
+    
             await send(message)
 
         await self.app(scope, receive, _logging_send)
