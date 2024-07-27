@@ -1,11 +1,11 @@
 from typing import List
 from app.common.factory import Factory
 from fastapi import APIRouter, Body, Depends, Query
-from app.models.text import Text
-from app.schemas.extras.common import Response
-from app.schemas.requests.query import SearchBodyRequest
-from app.services.query import QueryService
-from app.controllers.query import QueryController
+from app.models import Text
+from app.schemas.extras import Response
+from app.schemas.requests import SearchBodyRequest
+from app.services import QueryService
+from app.controllers import QueryController
 
 query_router = APIRouter()
 

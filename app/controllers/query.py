@@ -1,8 +1,7 @@
 from typing import List
-from app.models.text import Text
-from app.models.text import Text
-from app.schemas.requests.query import SearchBodyRequest
-from app.services.query import QueryService
+from app.models import Text
+from app.schemas.requests import SearchBodyRequest
+from app.services import QueryService
 
 class QueryController():
     def __init__(self, query_serivce: QueryService):

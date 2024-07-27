@@ -1,12 +1,9 @@
 from typing import List
-from app.common.controller.base import BaseController
-from app.common.exceptions.base import NotFoundException
-from app.models.text import Text
-from app.repositories.query import QueryRepository
-from app.models.text import Text
-from app.repositories.query import QueryRepository
-from app.schemas.requests.query import SearchBodyRequest
-
+from app.common.controller import BaseController
+from app.common.exceptions import NotFoundException
+from app.models import Text
+from app.repositories import QueryRepository
+from app.schemas.requests import SearchBodyRequest
 
 class QueryService(BaseController[Text]):
     def __init__(self, query_repository: QueryRepository):

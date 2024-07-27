@@ -1,8 +1,6 @@
 from typing import Optional
 from beanie import Document, Indexed
 from pydantic import Field
-from bson import ObjectId
-
 
 class Text(Document):
     # Beanie automatically uses ObjectId for the '_id' field

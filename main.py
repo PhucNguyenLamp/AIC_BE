@@ -3,9 +3,9 @@ from fastapi import FastAPI, Request
 from fastapi.middleware import Middleware
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from app.common.exceptions.base import CustomException
+from app.common.exceptions import CustomException
 from app.routers.v1 import v1_router
-from app.config.config import settings
+from app.config import settings
 from app.models.text import Text
 from beanie import init_beanie
 from contextlib import asynccontextmanager
