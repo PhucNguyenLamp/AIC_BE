@@ -7,12 +7,12 @@ class QueryRepository(BaseRepository[Text]):
     """
     Query repository provides all the database operations for the Query model.
     """
-
-    async def get_record_by_index(self, index: Any) -> List[Text]:
+    
+    async def get_keyframe_by_index(self, key: int) -> List[Text]:
         """
         Get all record by index.
 
-        :param text: index
-        :return: A list of tasks.
+        :param key: index
+        :return: A list of keyframe.
         """
-        return await self.get_all()
+        return await self.collection.find_one({"key": key})

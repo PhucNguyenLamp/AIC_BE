@@ -12,20 +12,6 @@ from contextlib import asynccontextmanager
 from motor.motor_asyncio import AsyncIOMotorClient
 from app.common.middlewares import ResponseLoggerMiddleware
 
-
-def on_auth_error(request: Request, exc: Exception):
-    status_code, error_code, message = 401, None, str(exc)
-    if isinstance(exc, CustomException):
-        status_code = int(exc.code)
-        error_code = exc.error_code
-        message = exc.message
-
-    return JSONResponse(
-        status_code=status_code,
-        content={"error_code": error_code, "message": message},
-    )
-
-
 def init_listeners(app_: FastAPI) -> None:
     @app_.exception_handler(CustomException)
     async def custom_exception_handler(request: Request, exc: CustomException):
@@ -59,9 +45,6 @@ def make_middleware() -> List[Middleware]:
             allow_methods=["*"],
             allow_headers=["*"],
         ),
-        # Middleware(
-        #     on_error=on_auth_error,
-        # ),
         Middleware(ResponseLoggerMiddleware),
     ]
     return middleware

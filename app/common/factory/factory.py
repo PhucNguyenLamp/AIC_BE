@@ -1,7 +1,7 @@
 from functools import partial
 from app.repositories.query import QueryRepository
 from app.models.text import Text
-from app.controllers.query import QueryController
+from app.services.query import QueryService
 
 
 class Factory:
@@ -14,7 +14,7 @@ class Factory:
         # Assuming Text is the collection you want to pass
         return QueryRepository(collection=Text)
     
-    def get_query_controller(self):
-        return QueryController(
+    def get_query_service(self):
+        return QueryService(
             query_repository=self.query_repository()
         )

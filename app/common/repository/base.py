@@ -69,3 +69,5 @@ class BaseRepository(Generic[ModelType]):
         :return: The count of records.
         """
         return await self.collection.count_documents({})
+    
+    
