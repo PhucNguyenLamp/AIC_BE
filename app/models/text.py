@@ -1,14 +1,15 @@
 from typing import Optional
-from beanie import Document
+from beanie import Document, Indexed
 from pydantic import Field
 from bson import ObjectId
 
 
 class Text(Document):
     # Beanie automatically uses ObjectId for the '_id' field
-    index: int = Field(default=0)
+    key: Indexed(int, unique=True) = Field(default=0) # type: ignore
     value: Optional[str] = None
 
     class Settings:
-        # No need to define custom indexes for ObjectId; it's automatically indexed
-        pass
+        indexes = [
+            "key",  # This creates a single-field index on the 'key' field
+        ]
