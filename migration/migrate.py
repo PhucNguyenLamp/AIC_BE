@@ -3,11 +3,6 @@ from pymongo import MongoClient
 from bson import ObjectId
 import json
 
-# data model
-class Data(BaseModel):
-    name: str
-    data: str
-
 # connect to mongodb 
 client = MongoClient('mongodb://localhost:27017')
 db = client['test']

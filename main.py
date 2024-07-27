@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers.v1 import v1_router
 from app.config.config import settings
-from app.models.query_text_image import TextImage
+from app.models.text import Text
 from beanie import init_beanie
 from contextlib import asynccontextmanager
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
         # username=settings.MONGO_USER,
         # password=settings.MONGO_PASSWORD,
     )
-    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[TextImage])
+    await init_beanie(database=app.client[settings.MONGO_DB], document_models=[Text])
 
     yield
 

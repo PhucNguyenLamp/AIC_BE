@@ -1,6 +1,6 @@
 from functools import partial
 from app.repositories.query import QueryRepository
-from app.models.query_text_image import TextImage
+from app.models.text import Text
 from app.controllers.query import QueryController
 
 
@@ -11,8 +11,8 @@ class Factory:
     """
     # Repositories
     def query_repository(self):
-        # Assuming TextImage is the collection you want to pass
-        return QueryRepository(collection=TextImage)
+        # Assuming Text is the collection you want to pass
+        return QueryRepository(collection=Text)
     
     def get_query_controller(self):
         return QueryController(

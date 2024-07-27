@@ -1,3 +1,3 @@
-from .query_text_image import TextImage
+from .text import Text
 
-__all__ = ["TextImage"]
+__all__ = ["Text"]

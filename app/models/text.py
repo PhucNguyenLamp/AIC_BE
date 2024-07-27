@@ -4,7 +4,7 @@ from pydantic import Field
 from bson import ObjectId
 
 
-class TextImage(Document):
+class Text(Document):
     # Beanie automatically uses ObjectId for the '_id' field
     index: int = Field(default=0)
     value: Optional[str] = None
