@@ -15,4 +15,4 @@ class QueryRepository(BaseRepository[Text]):
         :param key: index
         :return: A list of keyframe.
         """
-        return await self.collection.find_one({"key": key})
+        return await self.collection.find_one({"key": int(key)})

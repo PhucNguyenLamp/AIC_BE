@@ -13,7 +13,7 @@ class QueryService(BaseController[Text]):
 
     async def get_keyframe_by_index(self, index: int) -> Text:
         result = await self.query_repository.get_keyframe_by_index(index)
-
+        
         if not result:
             raise NotFoundException("No keyframe found")
         
