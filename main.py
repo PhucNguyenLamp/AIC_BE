@@ -72,6 +72,7 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     lifespan=lifespan,
     middleware=make_middleware(),
+    docs_url= None if settings.ENVIRONMENT == "production" else "/docs",
 )
 
 init_listeners(app_=app)

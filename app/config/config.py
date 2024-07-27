@@ -3,6 +3,7 @@ from pydantic import AnyHttpUrl
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
+    ENVIRONMENT: str
     PROJECT_NAME: str
     API_V1_STR: str = "/api/v1"
     VERSION: str = "0.1.0"
