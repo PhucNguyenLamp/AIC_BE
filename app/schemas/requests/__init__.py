@@ -1,3 +1,3 @@
-from .query import SearchBodyRequest
+from .query import SearchBodyRequest, SearchSettings
 
-__all__ = ["SearchBodyRequest"]
+__all__ = ["SearchBodyRequest", "SearchSettings"]

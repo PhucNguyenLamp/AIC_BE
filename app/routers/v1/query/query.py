@@ -4,7 +4,7 @@ from app.schemas.responses.keyframes import KeyframeWithConfidence
 from fastapi import APIRouter, Body, Depends, Query
 from app.models import Text
 from app.schemas.extras import Response
-from app.schemas.requests import SearchBodyRequest
+from app.schemas.requests import SearchBodyRequest, SearchSettings
 from app.services import QueryService
 from app.controllers import QueryController
 
@@ -28,10 +28,13 @@ def get_query_controller(
 async def search(
     query_service: QueryService = Depends(Factory().get_query_service),
     request_body: List[SearchBodyRequest] = Body(),
-):
+    vector_search: str = Query(example='faiss', description="Description for param1"),
+):  
+    settings = SearchSettings(vector_search=vector_search)
+
     query_controller = get_query_controller(query_service)
 
-    query = await query_controller.search_keyframes_by_text(request_body)
+    query = await query_controller.search_keyframes_by_text(request_body, settings)
 
     return Response[List[KeyframeWithConfidence]](data=query)
 

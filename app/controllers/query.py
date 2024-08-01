@@ -1,6 +1,6 @@
 from typing import List, Tuple
 from app.models import Text
-from app.schemas.requests import SearchBodyRequest
+from app.schemas.requests import SearchBodyRequest, SearchSettings
 from app.services import QueryService
 
 
@@ -13,7 +13,6 @@ class QueryController:
         return await self.query_serivce.get_keyframe_by_index(index)
 
     async def search_keyframes_by_text(
-        self, body: List[SearchBodyRequest]
+        self, body: List[SearchBodyRequest], settings: SearchSettings
     ):
-        print('body', body)
-        return await self.query_serivce.search_keyframes_by_text(body)
+        return await self.query_serivce.search_keyframes_by_text(body, settings)

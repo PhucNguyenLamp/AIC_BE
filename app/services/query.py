@@ -4,6 +4,7 @@ from app.common.exceptions import NotFoundException
 from app.models import Text
 from app.repositories import QueryRepository
 from app.schemas.requests import SearchBodyRequest
+from app.schemas.requests.query import SearchSettings
 from app.schemas.responses.keyframes import KeyframeWithConfidence
 from app.services.clip_embedding import CLIPEmbedding
 import os
@@ -24,11 +25,14 @@ class QueryService(BaseController[Text]):
         return result
 
     async def search_keyframes_by_text(
-        self, body: List[SearchBodyRequest]
+        self, body: List[SearchBodyRequest], settings: SearchSettings
     ) -> List[KeyframeWithConfidence]:
+        use_faiss = settings.vector_search == 'faiss'
+        print(use_faiss)
+
         # Perform text queries concurrently
         text_queries = [
-            embedder.text_query(req.value, k=5, use_faiss=True)
+            embedder.text_query(req.value, k=5, use_faiss=use_faiss)
             for req in body if req.model == "Text"
         ]
         results = await asyncio.gather(*text_queries)
