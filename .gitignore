@@ -17,3 +17,7 @@ env/
 notebooks/
 .env
 .env.dev
+
+data/images
+*.bin
+*.npy
