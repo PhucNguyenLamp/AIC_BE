@@ -44,10 +44,10 @@ def transform_data(data: Dict[str, str]) -> List[Dict[str, Union[int, str]]]:
     ]
 
 
-path = os.path.join(os.path.dirname(__file__), './data/global_index_text.json')
+path = os.path.join(os.path.dirname(__file__), './data/global2imgpath.json')
 
 
-async def migrate(file_path: str = './data/global_index_text.json'):
+async def migrate(file_path: str = './data/global2imgpath.json'):
     await init_db()
 
     data = load_json_data(file_path)

@@ -14,6 +14,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.common.middlewares import ResponseLoggerMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from app.services.clip_embedding import CLIPEmbedding
+
 def init_listeners(app_: FastAPI) -> None:
     @app_.exception_handler(CustomException)
     async def custom_exception_handler(request: Request, exc: CustomException):
@@ -21,7 +23,6 @@ def init_listeners(app_: FastAPI) -> None:
             status_code=exc.code,
             content={"error_code": exc.error_code, "message": exc.message},
         )
-
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -70,7 +71,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-image_path = os.path.join(os.path.dirname(__file__), "./migration/data/images")
+image_path = os.path.join(os.path.dirname(__file__), "./data/images")
 app.mount("/images", StaticFiles(directory=image_path, html=False), name="images")
 
 app.include_router(v1_router, prefix=settings.API_V1_STR)

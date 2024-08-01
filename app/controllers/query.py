@@ -1,9 +1,10 @@
-from typing import List
+from typing import List, Tuple
 from app.models import Text
 from app.schemas.requests import SearchBodyRequest
 from app.services import QueryService
 
-class QueryController():
+
+class QueryController:
     def __init__(self, query_serivce: QueryService):
         self.query_serivce = query_serivce
 
@@ -11,5 +12,8 @@ class QueryController():
         # get all method in repository
         return await self.query_serivce.get_keyframe_by_index(index)
 
-    async def search_get_keyframe_index(self, body: List[SearchBodyRequest]):
-        return await self.query_serivce.search_get_keyframe_index(body)
+    async def search_keyframes_by_text(
+        self, body: List[SearchBodyRequest]
+    ):
+        print('body', body)
+        return await self.query_serivce.search_keyframes_by_text(body)

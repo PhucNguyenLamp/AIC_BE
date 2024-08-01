@@ -2,23 +2,23 @@ import os
 import io
 import base64
 import json
-import time
 
 from typing import List, Tuple
 import numpy as np
 
 import torch
 import open_clip
-from tqdm.notebook import tqdm
+# from tqdm.notebook import tqdm
 
 
 from PIL import Image
 import faiss
 from usearch.index import Index as UsearchIndex
-from matplotlib import pyplot as plt
+# from matplotlib import pyplot as plt
 
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
+
 
 # Factory for creating model and preprocessing
 class ModelFactory:
@@ -37,6 +37,7 @@ class ModelFactory:
             else:
                 raise e
 
+
 # Strategy pattern for different indexing methods
 class IndexStrategy:
     def build_index(self, embeddings: np.ndarray):
@@ -47,9 +48,10 @@ class IndexStrategy:
 
     def load_index(self, file_path: str):
         raise NotImplementedError
-    
+
     def search(self, query_embedding: np.ndarray, k: int) -> List[Tuple[int, float]]:
         raise NotImplementedError
+
 
 class FaissIndexStrategy(IndexStrategy):
     def __init__(self):
@@ -113,104 +115,103 @@ class CLIPEmbedding:
         self.usearch_strategy = UsearchIndexStrategy()
         self.global_index2image_path = {}
 
-    def process_image_folder(
-        self, root_dir: str, output_dir: str, batch_size: int = 32
-    ):
-        os.makedirs(output_dir, exist_ok=True)
+    # def process_image_folder(
+    #     self, root_dir: str, output_dir: str, batch_size: int = 32
+    # ):
+    #     os.makedirs(output_dir, exist_ok=True)
 
-        image_paths = self._collect_image_paths(root_dir)
-        if not image_paths:
-            print(f"No image found in the given root directory: {root_dir}")
-            return None
+    #     image_paths = self._collect_image_paths(root_dir)
+    #     if not image_paths:
+    #         print(f"No image found in the given root directory: {root_dir}")
+    #         return None
 
-        all_embeddings = self._process_images_in_batches(image_paths, batch_size)
-        if all_embeddings is not None:
-            self._save_results(all_embeddings, image_paths, output_dir)
-            return all_embeddings
-        else:
-            print("No embeddings were created.")
-            return None
+    #     all_embeddings = self._process_images_in_batches(image_paths, batch_size)
+    #     if all_embeddings is not None:
+    #         self._save_results(all_embeddings, image_paths, output_dir)
+    #         return all_embeddings
+    #     else:
+    #         print("No embeddings were created.")
+    #         return None
 
-    def _collect_image_paths(self, root_dir: str) -> List[str]:
-        image_paths = []
-        for root, _, files in os.walk(root_dir):
-            for file in files:
-                if file.lower().endswith(
-                    (".png", ".jpg", ".jpeg", ".bmp", ".gif", ".webp")
-                ):
-                    image_paths.append(os.path.join(root, file))
-        image_paths.sort()
-        return image_paths
+    # def _collect_image_paths(self, root_dir: str) -> List[str]:
+    #     image_paths = []
+    #     for root, _, files in os.walk(root_dir):
+    #         for file in files:
+    #             if file.lower().endswith(
+    #                 (".png", ".jpg", ".jpeg", ".bmp", ".gif", ".webp")
+    #             ):
+    #                 image_paths.append(os.path.join(root, file))
+    #     image_paths.sort()
+    #     return image_paths
 
-    def _process_images_in_batches(
-        self, image_paths: List[str], batch_size: int
-    ) -> np.ndarray:
-        embeddings = []
-        for i in tqdm(
-            range(0, len(image_paths), batch_size),
-            desc="Processing Batches of images",
-            unit=f"batch, size = {batch_size}",
-        ):
-            batch_paths = image_paths[i : i + batch_size]
-            batch_embeddings = self._process_batch(batch_paths)
-            if batch_embeddings is not None:
-                embeddings.append(batch_embeddings)
+    # def _process_images_in_batches(
+    #     self, image_paths: List[str], batch_size: int
+    # ) -> np.ndarray:
+    #     embeddings = []
+    #     for i in tqdm(
+    #         range(0, len(image_paths), batch_size),
+    #         desc="Processing Batches of images",
+    #         unit=f"batch, size = {batch_size}",
+    #     ):
+    #         batch_paths = image_paths[i : i + batch_size]
+    #         batch_embeddings = self._process_batch(batch_paths)
+    #         if batch_embeddings is not None:
+    #             embeddings.append(batch_embeddings)
 
-        if embeddings:
-            return np.vstack(embeddings)
-        return None
+    #     if embeddings:
+    #         return np.vstack(embeddings)
+    #     return None
 
-    def _process_batch(self, batch_paths: List[str]) -> np.ndarray:
-        batch_images = []
-        for img_path in batch_paths:
-            try:
-                img = Image.open(img_path).convert("RGB")
-                img_tensor = self.preprocess(img).unsqueeze(0)
-                batch_images.append(img_tensor)
-            except Exception as e:
-                print(f"Error processing image {img_path}: {str(e)}")
-                continue
+    # def _process_batch(self, batch_paths: List[str]) -> np.ndarray:
+    #     batch_images = []
+    #     for img_path in batch_paths:
+    #         try:
+    #             img = Image.open(img_path).convert("RGB")
+    #             img_tensor = self.preprocess(img).unsqueeze(0)
+    #             batch_images.append(img_tensor)
+    #         except Exception as e:
+    #             print(f"Error processing image {img_path}: {str(e)}")
+    #             continue
 
-        if batch_images:
-            batch_tensor = torch.cat(batch_images).to(self.device)
-            with torch.no_grad():
-                batch_embeddings = (
-                    self.model.encode_image(batch_tensor)
-                    .cpu()
-                    .detach()
-                    .numpy()
-                    .astype(np.float32)
-                )
-            return batch_embeddings
-        return None
+    #     if batch_images:
+    #         batch_tensor = torch.cat(batch_images).to(self.device)
+    #         with torch.no_grad():
+    #             batch_embeddings = (
+    #                 self.model.encode_image(batch_tensor)
+    #                 .cpu()
+    #                 .detach()
+    #                 .numpy()
+    #                 .astype(np.float32)
+    #             )
+    #         return batch_embeddings
+    #     return None
 
-    def _save_results(
-        self, embeddings: np.ndarray, image_paths: List[str], output_dir: str, use_faiss: bool = True
-    ):
-        clip_file = os.path.join(
-            output_dir, f"{self.model_nick_name}_clip_embeddings.npy"
-        )
-        np.save(clip_file, embeddings)
-        print(f"CLIP embeddings saved to {clip_file}")
+    # def _save_results(
+    #     self, embeddings: np.ndarray, image_paths: List[str], output_dir: str, use_faiss: bool = True
+    # ):
+    #     clip_file = os.path.join(
+    #         output_dir, f"{self.model_nick_name}_clip_embeddings.npy"
+    #     )
+    #     np.save(clip_file, embeddings)
+    #     print(f"CLIP embeddings saved to {clip_file}")
 
-        self.global_index2image_path = {i: path for i, path in enumerate(image_paths)}
-        index_path_file = os.path.join(output_dir, "global2imgpath.json")
-        with open(index_path_file, "w") as f:
-            json.dump(self.global_index2image_path, f, indent=4)
-        print(f"global2imgpath saved to {index_path_file}")
+    #     self.global_index2image_path = {i: path for i, path in enumerate(image_paths)}
+    #     index_path_file = os.path.join(output_dir, "global2imgpath.json")
+    #     with open(index_path_file, "w") as f:
+    #         json.dump(self.global_index2image_path, f, indent=4)
+    #     print(f"global2imgpath saved to {index_path_file}")
 
-        if use_faiss:
-        # Save FAISS and USearch indexes
-            self.faiss_strategy.build_index(embeddings)
-            faiss_file = os.path.join(output_dir, f"{self.model_nick_name}_faiss.bin")
-            self.faiss_strategy.save_index(faiss_file)
-        else:
-            self.usearch_strategy.build_index(embeddings)
-            usearch_file = os.path.join(output_dir, f"{self.model_nick_name}_usearch.bin")
-            self.usearch_strategy.save_index(usearch_file)
+    #     if use_faiss:
+    #     # Save FAISS and USearch indexes
+    #         self.faiss_strategy.build_index(embeddings)
+    #         faiss_file = os.path.join(output_dir, f"{self.model_nick_name}_faiss.bin")
+    #         self.faiss_strategy.save_index(faiss_file)
+    #     else:
+    #         self.usearch_strategy.build_index(embeddings)
+    #         usearch_file = os.path.join(output_dir, f"{self.model_nick_name}_usearch.bin")
+    #         self.usearch_strategy.save_index(usearch_file)
 
-    
-    def text_query(
+    async def text_query(
         self, query: str, k: int = 20, use_faiss: bool = True
     ) -> List[Tuple[int, float]]:
         with torch.no_grad():
@@ -270,89 +271,89 @@ class CLIPEmbedding:
         print("Indexes and mappings loaded successfully.")
 
 
-def display_result(indices, embedder, k=20):
-    k = min(k, len(indices))
+# def display_result(indices, embedder, k=20):
+#     k = min(k, len(indices))
 
-    n_cols = 3
-    n_rows = (k + n_cols - 1) // n_cols
+#     n_cols = 3
+#     n_rows = (k + n_cols - 1) // n_cols
 
-    fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 7 * n_rows))
+#     fig, axes = plt.subplots(n_rows, n_cols, figsize=(20, 7 * n_rows))
 
-    if n_rows == 1:
-        axes = [axes]
-    if n_cols == 1:
-        axes = [[ax] for ax in axes]
+#     if n_rows == 1:
+#         axes = [axes]
+#     if n_cols == 1:
+#         axes = [[ax] for ax in axes]
 
-    for i, idx in enumerate(indices[:k]):
-        if i >= k:
-            break
+#     for i, idx in enumerate(indices[:k]):
+#         if i >= k:
+#             break
 
-        row = i // n_cols
-        col = i % n_cols
+#         row = i // n_cols
+#         col = i % n_cols
 
-        img_path = embedder.get_image_paths([idx])[0]
-        img = Image.open(img_path)
-        axes[row][col].imshow(img)
-        axes[row][col].set_title(f"Rank: {i+1}", fontsize=12)
-        filename = os.path.basename(img_path)
-        axes[row][col].set_xlabel(filename, fontsize=10, wrap=True)
+#         img_path = embedder.get_image_paths([idx])[0]
+#         img = Image.open(img_path)
+#         axes[row][col].imshow(img)
+#         axes[row][col].set_title(f"Rank: {i+1}", fontsize=12)
+#         filename = os.path.basename(img_path)
+#         axes[row][col].set_xlabel(filename, fontsize=10, wrap=True)
 
-        axes[row][col].axis("off")
+#         axes[row][col].axis("off")
 
-    for i in range(k, n_rows * n_cols):
-        row = i // n_cols
-        col = i % n_cols
-        axes[row][col].axis("off")
+#     for i in range(k, n_rows * n_cols):
+#         row = i // n_cols
+#         col = i % n_cols
+#         axes[row][col].axis("off")
 
-    plt.tight_layout()
-    plt.subplots_adjust(hspace=0.3, wspace=0.1)
-    plt.show()
+#     plt.tight_layout()
+#     plt.subplots_adjust(hspace=0.3, wspace=0.1)
+#     plt.show()
 
 
-# Initialize the CLIPEmbedding class
-embedder = CLIPEmbedding(
-    model_name="hf-hub:apple/MobileCLIP-B-LT-OpenCLIP",
-    model_nick_name="mobile_clip_B_LT_openCLIP",
-)
+# # Initialize the CLIPEmbedding class
+# embedder = CLIPEmbedding(
+#     model_name="hf-hub:apple/MobileCLIP-B-LT-OpenCLIP",
+#     model_nick_name="mobile_clip_B_LT_openCLIP",
+# )
 
-# Load the indexes
-faiss_path = os.path.join(
-    os.path.dirname(__file__),
-    "../../data/embedding/mobile_clip_B_LT_openclip_faiss.bin",
-)
-usearch_path = os.path.join(
-    os.path.dirname(__file__),
-    "../../data/embedding/mobile_clip_B_LT_openclip_usearch.bin",
-)  # Assuming you have a similar file for USearch
-global2imgpath_path = os.path.join(
-    os.path.dirname(__file__), "../../data/embedding/global2imgpath.json"
-)
+# # Load the indexes
+# faiss_path = os.path.join(
+#     os.path.dirname(__file__),
+#     "../../data/embedding/mobile_clip_B_LT_openclip_faiss.bin",
+# )
+# usearch_path = os.path.join(
+#     os.path.dirname(__file__),
+#     "../../data/embedding/mobile_clip_B_LT_openclip_usearch.bin",
+# )  # Assuming you have a similar file for USearch
+# global2imgpath_path = os.path.join(
+#     os.path.dirname(__file__), "../../data/embedding/global2imgpath.json"
+# )
 
-# Load the indexes
-embedder.load_indexes(
-    faiss_path=None, usearch_path=usearch_path, global2imgpath_path=global2imgpath_path
-)
+# # Load the indexes
+# embedder.load_indexes(
+#     faiss_path=None, usearch_path=usearch_path, global2imgpath_path=global2imgpath_path
+# )
 
-# Perform the search query
-query = "The video shows three Samsung phones at the product launch. Initially, each phone appears one by one and then all three phones appear together."
-print(f"\nOriginal Query: {query}")
+# # Perform the search query
+# query = "The video shows three Samsung phones at the product launch. Initially, each phone appears one by one and then all three phones appear together."
+# print(f"\nOriginal Query: {query}")
 
-# Measure performance for USearch
-start_time = time.time()
-usearch_results = embedder.text_query(query, k=5, use_faiss=False)
-end_time = time.time()
-print(f"USearch Results: {usearch_results}")
-print(f"USearch Time: {end_time - start_time:.4f} seconds")
+# # Measure performance for USearch
+# start_time = time.time()
+# usearch_results = embedder.text_query(query, k=5, use_faiss=False)
+# end_time = time.time()
+# print(f"USearch Results: {usearch_results}")
+# print(f"USearch Time: {end_time - start_time:.4f} seconds")
 
-# Optionally, you could test FAISS if you have its index available
-# For demonstration purposes, let's switch the index back to FAISS and re-test
-embedder.load_indexes(
-    faiss_path=faiss_path, usearch_path=None, global2imgpath_path=global2imgpath_path
-)
+# # Optionally, you could test FAISS if you have its index available
+# # For demonstration purposes, let's switch the index back to FAISS and re-test
+# embedder.load_indexes(
+#     faiss_path=faiss_path, usearch_path=None, global2imgpath_path=global2imgpath_path
+# )
 
-# Measure performance for FAISS
-start_time = time.time()
-faiss_results = embedder.text_query(query, k=5, use_faiss=True)
-end_time = time.time()
-print(f"FAISS Results: {faiss_results}")
-print(f"FAISS Time: {end_time - start_time:.4f} seconds")
+# # Measure performance for FAISS
+# start_time = time.time()
+# faiss_results = embedder.text_query(query, k=5, use_faiss=True)
+# end_time = time.time()
+# print(f"FAISS Results: {faiss_results}")
+# print(f"FAISS Time: {end_time - start_time:.4f} seconds")

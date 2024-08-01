@@ -1,5 +1,6 @@
-from typing import List
+from typing import List, Tuple
 from app.common.factory import Factory
+from app.schemas.responses.keyframes import KeyframeWithConfidence
 from fastapi import APIRouter, Body, Depends, Query
 from app.models import Text
 from app.schemas.extras import Response
@@ -17,7 +18,7 @@ def get_query_controller(
 
 @query_router.post(
     "/search",
-    response_model=Response[List[int]],
+    response_model=Response[List[KeyframeWithConfidence]],
     summary="Search keyframes",
     tags=["Query"],
     response_description="List of keyframe indexes",
@@ -27,12 +28,12 @@ def get_query_controller(
 async def search(
     query_service: QueryService = Depends(Factory().get_query_service),
     request_body: List[SearchBodyRequest] = Body(),
-) -> Response[List[int]]:
+):
     query_controller = get_query_controller(query_service)
 
-    query = await query_controller.search_get_keyframe_index(request_body)
+    query = await query_controller.search_keyframes_by_text(request_body)
 
-    return Response[List[int]](data=query)
+    return Response[List[KeyframeWithConfidence]](data=query)
 
 
 @query_router.get(
