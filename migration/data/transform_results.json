@@ -1,0 +1,664 @@
+{
+  "boy": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "floor": [
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "person": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "man": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "paper": [
+    null
+  ],
+  "shirt": [
+    null
+  ],
+  "video": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "bookcase": [
+    null,
+    null,
+    null
+  ],
+  "bookshelf": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "chair": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "classroom": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "computer": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "table": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "girl": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "laptop": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "student": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "room": [
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "sit": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "woman": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "book": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "cartoon": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "child": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "image": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "open": [
+    null
+  ],
+  "pen": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "read": [
+    null
+  ],
+  "write": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "writing": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "bunk bed": [
+    null,
+    null,
+    null
+  ],
+  "dormitory": [
+    null
+  ],
+  "journal": [
+    null,
+    null,
+    null
+  ],
+  "homework": [
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "mark": [
+    null,
+    null
+  ],
+  "notebook": [
+    null,
+    null
+  ],
+  "notepad": [
+    null,
+    null
+  ],
+  "computer monitor": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "computer screen": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "hand": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "point": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "screen": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "pencil": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "instrument": [
+    null,
+    null
+  ],
+  "play": [
+    null,
+    null,
+    null
+  ],
+  "sing": [
+    null,
+    null
+  ],
+  "stool": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "ukulele": [
+    null,
+    null
+  ],
+  "learn": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "job": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "office supply": [
+    null,
+    null
+  ],
+  "teacher": [
+    null,
+    null,
+    null
+  ],
+  "guitar": [
+    null
+  ],
+  "music": [
+    null
+  ],
+  "ambulance": [
+    null,
+    null,
+    null
+  ],
+  "car": [
+    null,
+    null,
+    null
+  ],
+  "city street": [
+    null,
+    null,
+    null
+  ],
+  "emergency vehicle": [
+    null
+  ],
+  "night": [
+    null,
+    null,
+    null
+  ],
+  "police": [
+    null
+  ],
+  "road": [
+    null,
+    null,
+    null
+  ],
+  "vehicle": [
+    null,
+    null,
+    null
+  ],
+  "drive": [
+    null,
+    null
+  ],
+  "motorcycle": [
+    null,
+    null
+  ],
+  "brand": [
+    null,
+    null,
+    null
+  ],
+  "chessboard": [
+    null,
+    null
+  ],
+  "logo": [
+    null,
+    null,
+    null
+  ],
+  "red": [
+    null,
+    null,
+    null
+  ],
+  "square": [
+    null
+  ],
+  "text": [
+    null
+  ],
+  "cube": [
+    null,
+    null
+  ],
+  "stand": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "taxi": [
+    null
+  ],
+  "license plate": [
+    null
+  ],
+  "motorcyclist": [
+    null
+  ],
+  "van": [
+    null
+  ],
+  "debate": [
+    null,
+    null,
+    null
+  ],
+  "interview": [
+    null,
+    null,
+    null
+  ],
+  "news": [
+    null,
+    null,
+    null,
+    null,
+    null
+  ],
+  "television": [
+    null,
+    null,
+    null,
+    null
+  ],
+  "video game": [
+    null
+  ],
+  "shopping cart": [
+    null,
+    null
+  ],
+  "stop sign": [
+    null,
+    null
+  ],
+  "city": [
+    null,
+    null
+  ],
+  "city skyline": [
+    null,
+    null
+  ],
+  "design": [
+    null
+  ],
+  "footstall": [
+    null
+  ],
+  "carpet": [
+    null
+  ],
+  "cart": [
+    null
+  ],
+  "shopper": [
+    null
+  ],
+  "tie": [
+    null
+  ]
+}
