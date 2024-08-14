@@ -5,7 +5,7 @@ from pydantic import Field
 
 class Object(Document):
     name: Indexed(str, unique=True) = Field(default=0)  # type: ignore
-    value: List[str] = []
+    value: List[int] = []
 
     class Settings:
         indexes = [

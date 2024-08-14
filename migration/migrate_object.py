@@ -1,6 +1,11 @@
 """Migrate object table."""
+
 import sys
 import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+
 import json
 import asyncio
 from typing import Dict, List
@@ -9,7 +14,6 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.config.config import Settings
 from app.models import Text, Object
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 settings = Settings()
 
@@ -38,9 +42,12 @@ async def create_path_to_key_mapping() -> Dict[str, int]:
 async def transform_and_save_data(input_file: str, output_file: str):
     data = load_json_data(input_file)
     path_to_key_mapping = await create_path_to_key_mapping()
-
+    print(path_to_key_mapping)
     transformed_data = {}
     for obj, paths in data.items():
+        for path in paths:
+            if path not in path_to_key_mapping:
+                print(f"Path {path} not found in Text table")
         transformed_data[obj] = [
             (
                 str(path_to_key_mapping.get(path))
@@ -49,6 +56,8 @@ async def transform_and_save_data(input_file: str, output_file: str):
             )
             for path in paths
         ]
+
+        print(f"Transformed {len(paths)} paths for object {obj}")
 
     with open(output_file, "w") as f:
         json.dump(transformed_data, f, indent=2)
@@ -66,7 +75,7 @@ async def migrate_objects(file_path: str):
 
     # Tạo và chèn các Object mới, loại bỏ các giá trị None
     objects_to_insert = [
-        Object(name=name, value=[value for value in values if value is not None])
+        Object(name=name, value=[int(value) for value in values if value is not None])
         for name, values in data.items()
     ]
     await Object.insert_many(objects_to_insert)
