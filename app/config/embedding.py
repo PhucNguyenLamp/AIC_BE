@@ -11,11 +11,11 @@ embedder = CLIPEmbedding(
 # Load the indexes (adjust paths as necessary)
 faiss_path = os.path.join(
     os.path.dirname(__file__),
-    "../../data/embedding/mobile_clip_B_LT_openclip_faiss.bin",
+    "../../data/embedding/faiss.bin",
 )
 usearch_path = os.path.join(
     os.path.dirname(__file__),
-    "../../data/embedding/mobile_clip_B_LT_openclip_usearch.bin",
+    "../../data/embedding/usearch.bin",
 )  # Assuming you have a similar file for USearch
 global2imgpath_path = os.path.join(
     os.path.dirname(__file__), "../../data/embedding/global2imgpath.json"

@@ -19,5 +19,3 @@ notebooks/
 .env.dev
 
 data/images
-*.bin
-*.npy
